@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.providers.celery.operators.celery import CeleryOperator
+from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 
 default_args = {
@@ -11,15 +11,13 @@ default_args = {
 }
 
 with DAG(
-    'test_celery_operator',
+    'test_celery_executor',
     default_args=default_args,
-    description='A DAG to test CeleryOperator',
+    description='A simple DAG to test CeleryExecutor',
     schedule_interval=None,
     catchup=False,
 ) as dag:
-    celery_task = CeleryOperator(
-        task_id='run_celery_task',
-        celery_app='my_celery_app',
-        task_name='my_celery_app.tasks.add',
-        op_args=[2, 3],
+    test_task = BashOperator(
+        task_id='print_hello',
+        bash_command='echo "Hello from CeleryExecutor!"',
     )
