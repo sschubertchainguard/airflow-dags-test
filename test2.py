@@ -3,6 +3,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 import logging
 import celery
+from datetime import datetime, timedelta
 
 # Default arguments for the DAG
 default_args = {
